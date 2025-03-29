@@ -5,7 +5,7 @@ from ..models import models, schemas
 
 def create(db: Session, sandwich):
     db_sandwich = models.Sandwich(
-    sandwich_name = sandwich.name,
+    sandwich_name = sandwich.sandwich_name,
     price = sandwich.price
     )
     db.add(db_sandwich)
@@ -23,24 +23,15 @@ def read_one(db: Session, sandwich_id):
 
 
 def update(db: Session, sandwich_id, sandwich):
-    # Query the database for the specific order to update
     db_sandwich = db.query(models.Sandwich).filter(models.Sandwich.id == sandwich_id)
-    # Extract the update data from the provided 'order' object
     update_data = sandwich.model_dump(exclude_unset=True)
-    # Update the database record with the new data, without synchronizing the session
     db_sandwich.update(update_data, synchronize_session=False)
-    # Commit the changes to the database
     db.commit()
-    # Return the updated order record
     return db_sandwich.first()
 
 
 def delete(db: Session, sandwich_id):
-    # Query the database for the specific order to delete
-    db_sandwich = db.query(models.Order).filter(models.Order.id == sandwich_id)
-    # Delete the database record without synchronizing the session
+    db_sandwich = db.query(models.Sandwich).filter(models.Sandwich.id == sandwich_id)
     db_sandwich.delete(synchronize_session=False)
-    # Commit the changes to the database
     db.commit()
-    # Return a response with a status code indicating success (204 No Content)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

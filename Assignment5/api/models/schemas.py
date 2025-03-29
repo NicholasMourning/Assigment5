@@ -60,7 +60,7 @@ class RecipeUpdate(BaseModel):
 
 class Recipe(RecipeBase):
     id: int
-    sandwich: Sandwich = None
+    sandwich: Resource = None
     resource: Resource = None
 
     class ConfigDict:
@@ -84,7 +84,7 @@ class OrderDetailUpdate(BaseModel):
 class OrderDetail(OrderDetailBase):
     id: int
     order_id: int
-    sandwich: Sandwich = None
+    sandwich: Resource = None
 
     class ConfigDict:
         from_attributes = True
